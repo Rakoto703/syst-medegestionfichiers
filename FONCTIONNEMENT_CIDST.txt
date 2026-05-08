@@ -1,0 +1,259 @@
+================================================================================
+FONCTIONNEMENT DU SYSTÈME DE GESTION CIDST V2.0
+================================================================================
+
+ORGANISME: Centre d'Information et de Documentation Scientifique et Technique
+DESCRIPTION: Système modulaire et sécurisé de gestion centralisée des utilisateurs,
+              groupes, partages Samba et sécurité Linux pour l'infrastructure CIDST
+
+1. STRUCTURE ORGANISATIONNELLE CIDST
+------------------------------------
+
+DIRECTION
+├── Service des Affaires Administratives et Financières (SAF)
+│   ├── Chef (rw sur /srv/cidst/saf/)
+│   └── Agents (rw sur /srv/cidst/saf/partages/)
+├── Service Commercial et Relations Publiques (SCRP)
+│   ├── Chef (rw sur /srv/cidst/scrp/)
+│   └── Agents (rw sur /srv/cidst/scrp/partages/)
+├── Service Technologies de l'Information et Communication (STIC)
+│   ├── Chef (rw sur /srv/cidst/stic/)
+│   └── Agents (rw sur /srv/cidst/stic/partages/)
+├── Département Acquisitions de l'Information (DAI)
+│   ├── Chef (rw sur /srv/cidst/dai/)
+│   └── Agents (rw sur /srv/cidst/dai/partages/)
+├── Département Traitement de l'Information (DTI)
+│   ├── Chef (rw sur /srv/cidst/dti/)
+│   └── Agents (rw sur /srv/cidst/dti/partages/)
+├── Département Réseaux et Système d'Information (DRSI)
+│   ├── Chef (rw sur /srv/cidst/drsi/)
+│   └── Agents (rw sur /srv/cidst/drsi/partages/)
+├── Département Diffusion de l'Information (DDI)
+│   ├── Chef (rw sur /srv/cidst/ddi/)
+│   └── Agents (rw sur /srv/cidst/ddi/partages/)
+├── Département Valorisation Résultats Recherche et Edition (DVRRE)
+│   ├── Chef (rw sur /srv/cidst/dvrre/)
+│   └── Agents (rw sur /srv/cidst/dvrre/partages/)
+├── Centre d'Appui à la Technologie et à l'Innovation (CATI)
+│   ├── Responsable (rw sur /srv/cidst/cati/)
+│   └── Assistants (rw sur /srv/cidst/cati/partages/)
+└── Antennes Régionales
+    ├── Fianarantsoa (rw sur /srv/cidst/antennes/fianarantsoa/)
+    ├── Toamasina (rw sur /srv/cidst/antennes/toamasina/)
+    └── Mahajanga (rw sur /srv/cidst/antennes/mahajanga/)
+
+2. ARCHITECTURE GLOBALE
+-----------------------
+Le système suit une architecture modulaire en couches:
+
+  ┌─────────────────────────────────────────┐
+  │  CSV (users.csv) - Source de vérité    │
+  │  Services/Départements CIDST           │
+  └─────────────────┬───────────────────────┘
+                    │ Modification
+  ┌─────────────────▼───────────────────────┐
+  │  csv_watcher.sh (surveillance temps    │
+  │  réel via inotifywait)                  │
+  └─────────────────┬───────────────────────┘
+                    │ Déclenche
+  ┌─────────────────▼───────────────────────┐
+  │  main.sh (orchestrateur principal)      │
+  └─────────────────┬───────────────────────┘
+                    │ Appelle
+  ┌─────────────────▼───────────────────────┐
+  │  lib/*.sh (modules fonctionnels)        │
+  └─────────────────────────────────────────┘
+
+3. FLUX D'EXÉCUTION
+-------------------
+
+a) Initialisation:
+   - Vérification root
+   - Acquisition lock (évite exécutions simultanées)
+   - Vérification CSV avec structure CIDST
+   - Création répertoires temporaires
+   - Initialisation logging
+
+b) Sécurité:
+   - Configuration firewall UFW restrictif
+   - Durcissement permissions système
+   - Installation ClamAV + scan rapide
+   - Configuration SELinux si disponible
+
+c) Analyse CSV (Structure CIDST):
+   - Lecture ligne par ligne (nom,motdepasse,groupe,role)
+   - Identification Directeur (role=pdg)
+   - Identification Chefs de services/départements (role=chef)
+   - Identification Agents (role=employe)
+   - Stockage dans tableaux associatifs
+
+d) Traitement utilisateurs (par service/département):
+   POUR CHAQUE LIGNE CSV:
+   1. Validation anti-injection (regex: ^[a-zA-Z0-9._-]+$)
+   2. Validation mot de passe minimum 8 caractères
+   3. Création groupe service/département si nouveau
+   4. Création utilisateur Linux + Samba
+   5. Configuration permissions selon rôle
+
+e) Configuration Samba (Partages documentaires):
+   - Partage SAF : Partage administratif
+   - Partage SCRP : Partage commercial
+   - Partage STIC : Partage informatique (ACL restrictives)
+   - Partage DAI : Acquisitions documentaires
+   - Partage DTI : Traitement documentaire
+   - Partage DRSI : Gestion réseau (ACL administrateur)
+   - Partage DDI : Diffusion documentation
+   - Partage DVRRE : Publication scientifique
+   - Partage CATI : Fonds patent/propriété intellectuelle
+   - Partage Antennes : Ressources régionales
+
+f) Périphérie (run once ou recurrent):
+   - Création archives utilisateurs supprimés
+   - Nettoyage dossiers orphelins
+   - Monitoring CPU/RAM/Disque
+   - Scan antivirus automatisé
+
+4. FORMAT CSV - CIDST
+---------------------
+Format: nom,motdepasse,groupe,role
+
+**IMPORTANT :** Le fichier CSV doit être rempli par l'administrateur selon les besoins réels du CIDST.
+
+Exemple (à adapter selon vos besoins):
+directeur_cidst,SecureP@ss123!,direction,pdg
+saf_chef,SecureP@ss123!,saf,chef
+admin_saf1,SecureP@ss123!,saf,employe
+
+Rôles:
+  pdg      : Directeur général CIDST, administrateur système, propriétaire archives
+  chef     : Chef service/département, accès rw complet sur dossier groupe
+  employe  : Agent, accès rw partages collectif, r sur documents archivés
+
+5. STRUCTURE RÉPERTOIRES `/srv/cidst/`
+-----------------------------------------
+/srv/cidst/
+├── _archive/              # Archive suppressions (privé root)
+├── partages_collectifs/   # Partages communs tous services
+├── saf/                   # Service Affaires Admin & Financières
+│   ├── partages/          # Partage groupe
+│   └── archives/
+├── scrp/                  # Service Commercial & Relations
+│   ├── partages/
+│   └── archives/
+├── stic/                  # Service TIC
+│   ├── partages/
+│   ├── archives/
+│   └── securise/          # Données sensibles (chmod 700)
+├── dai/                   # Département Acquisitions
+│   ├── partages/
+│   └── archives/
+├── dti/                   # Département Traitement
+│   ├── partages/
+│   └── archives/
+├── drsi/                  # Département Réseaux & Sys Info
+│   ├── partages/
+│   ├── archives/
+│   └── systeme/           # Logs + backups (root only)
+├── ddi/                   # Département Diffusion
+│   ├── partages/
+│   └── archives/
+├── dvrre/                 # Département Valorisation Recherche
+│   ├── partages/
+│   ├── archives/
+│   └── publications/      # Revue "Recherches Pour le Développement"
+├── cati/                  # Centre d'Appui Tech & Innovation
+│   ├── partages/
+│   ├── archives/
+│   └── brevets/           # Base données brevets (OMPI/OMAPI)
+└── antennes/
+    ├── fianarantsoa/
+    ├── toamasina/
+    └── mahajanga/
+
+6. PERMISSIONS CIDST
+--------------------
+Directeur (pdg):
+  - rwxr-x--- sur tous les répertoires CIDST
+  - Accès complet archives
+  - Lecture logs système
+
+Chefs services/départements (chef):
+  - rwxr-x--- sur répertoire groupe uniquement
+  - rwxrwx--- sur partages/ groupe
+  - Pas lecture autres groupes
+
+Agents (employe):
+  - r-xrwx--- sur partages/ groupe uniquement
+  - Création fichiers permise
+  - Pas suppression (sauf propres fichiers)
+
+Samba: SMB3 + encryption forcée
+  - Mode mixed pour rétro-compatibilité minimale
+
+7. SERVICES SAMBA CIDST
+-----------------------
+[global]
+   security = user
+   encryption = required
+   min protocol = SMB3
+   server signing = mandatory
+   map to guest = never
+   vfs objects = acl_xattr
+   
+[SAF_Partage]
+   path = /srv/cidst/saf/partages
+   valid users = @saf
+   write list = @saf
+   read only = no
+   create mask = 0770
+   directory mask = 0770
+   
+[SCRP_Partage]
+   path = /srv/cidst/scrp/partages
+   valid users = @scrp
+   write list = @scrp
+   read only = no
+   create mask = 0770
+   directory mask = 0770
+
+... (similaire pour autres départements/services)
+
+[CATI_Brevets]
+   path = /srv/cidst/cati/brevets
+   valid users = @cati,directeur_cidst
+   write list = cati_responsable
+   read only = no
+
+8. MONITORING CIDST
+-------------------
+- CPU, RAM, Disque: seuils 80%, alertes log
+- Espace disque archives: cible 90% max
+- Nombre utilisateurs actifs
+- Taille bases données documentaires
+- Disponibilité partages Samba
+- Scan antivirus: hebdomadaire minimum
+
+9. SAUVEGARDE/ARCHIVAGE
+-----------------------
+- Archives utilisateurs supprimés: /srv/cidst/_archive/users_[DATE].tar.gz
+- Conservation: 1 an (configurable)
+- Rotation logs: hebdomadaire
+- Logs: /var/log/cidst_gestion.log
+
+10. USAGE
+---------
+Installation:
+  sudo bash install.sh
+
+Lancement manuel:
+  sudo /srv/cidst/main.sh
+
+Surveillance temps réel:
+  sudo /srv/cidst/csv_watcher.sh
+  (relance main.sh automatiquement à chaque modif CSV)
+
+Vérification logs:
+  tail -f /var/log/cidst_gestion.log
+  grep "ERREUR" /var/log/cidst_gestion.log
+
+================================================================================

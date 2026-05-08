@@ -1,75 +1,84 @@
-# Système de Gestion CIDST Linux V3.0
+# 🚀 Système de Gestion CIDST Linux V3.0
 
-## Description
-Système modulaire et sécurisé pour la gestion centralisée du Centre d'Information et de Documentation Scientifique et Technique (CIDST) : utilisateurs, groupes, partages Samba, antennes régionales et sécurité sur Linux Ubuntu avec base de données SQLite.
+[![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-## Nouveautés V3.0
-- **Base de données SQLite** : Gestion persistante des utilisateurs avec audit trail complet
-- **Interface d'administration** : Console interactive pour la gestion des utilisateurs
-- **Hachage sécurisé** : Argon2id + salt pour les mots de passe
-- **Audit complet** : Traçabilité de toutes les opérations administratives
-- **Installation automatisée Ubuntu** : Déploiement one-click avec toutes les dépendances
+> **Système modulaire et sécurisé** pour la gestion centralisée du Centre d'Information et de Documentation Scientifique et Technique (CIDST) : utilisateurs, groupes, partages Samba, antennes régionales et sécurité sur Linux Ubuntu avec base de données SQLite.
 
-## Architecture
+## ✨ Nouveautés V3.0
+
+- 🗄️ **Base de données SQLite** : Gestion persistante des utilisateurs avec audit trail complet
+- 🖥️ **Interface d'administration** : Console interactive pour la gestion des utilisateurs
+- 🔐 **Hachage sécurisé** : Argon2id + salt pour les mots de passe
+- 📊 **Audit complet** : Traçabilité de toutes les opérations administratives
+- ⚡ **Installation automatisée Ubuntu** : Déploiement one-click avec toutes les dépendances
+
+## 🏗️ Architecture
 
 ```
 /srv/cidst/
-├── config.sh          # Configuration centralisée
-├── main.sh            # Orchestrateur principal
-├── admin_cidst.sh     # Interface d'administration interactive
-├── csv_watcher.sh     # Surveillance temps réel du CSV (legacy)
-├── install.sh         # Installateur Ubuntu automatisé
-├── cidst.db           # Base de données SQLite (source de vérité)
+├── config.sh          # ⚙️ Configuration centralisée
+├── main.sh            # 🎯 Orchestrateur principal
+├── admin_cidst.sh     # 👨‍💼 Interface d'administration interactive
+├── csv_watcher.sh     # 👀 Surveillance temps réel du CSV (legacy)
+├── install.sh         # 📦 Installateur Ubuntu automatisé
+├── cidst.db           # 🗃️ Base de données SQLite (source de vérité)
 └── lib/
-    ├── common.sh      # Utilitaires et validation
-    ├── database.sh    # Gestion SQLite + audit
-    ├── user.sh        # CRUD utilisateurs Linux + Samba
-    ├── group.sh       # CRUD groupes Linux
-    ├── directory.sh   # Gestion dossiers et ACL
-    ├── archive.sh     # Archivage suppressions
-    ├── samba.sh       # Configuration SMB3 sécurisée
-    ├── cleanup.sh     # Nettoyage orphelins + malwares
-    ├── monitor.sh     # Monitoring ressources
-    ├── antivirus.sh   # ClamAV + cron
-    ├── firewall.sh    # UFW restrictif
-    └── security.sh    # Renforcement système
+    ├── common.sh      # 🛠️ Utilitaires et validation
+    ├── database.sh    # 💾 Gestion SQLite + audit
+    ├── user.sh        # 👤 CRUD utilisateurs Linux + Samba
+    ├── group.sh       # 👥 CRUD groupes Linux
+    ├── directory.sh   # 📁 Gestion dossiers et ACL
+    ├── archive.sh     # 📦 Archivage suppressions
+    ├── samba.sh       # 🌐 Configuration SMB3 sécurisée
+    ├── cleanup.sh     # 🧹 Nettoyage orphelins + malwares
+    ├── monitor.sh     # 📈 Monitoring ressources
+    ├── antivirus.sh   # 🛡️ ClamAV + cron
+    ├── firewall.sh    # 🔥 UFW restrictif
+    └── security.sh    # 🔒 Renforcement système
 ```
 
-## Structure du CIDST
+## 🏢 Structure du CIDST
 
-**Services :**
-- SAF : Service des Affaires Administratives et Financières
-- SCRP : Service Commercial et Relations Publiques
-- STIC : Service Technologies de l'Information et de la Communication
+### Services
+| Service | Description |
+|---------|-------------|
+| **SAF** | Service des Affaires Administratives et Financières |
+| **SCRP** | Service Commercial et Relations Publiques |
+| **STIC** | Service Technologies de l'Information et de la Communication |
 
-**Départements :**
-- DAI : Département Acquisitions de l'Information
-- DTI : Département Traitement de l'Information
-- DRSI : Département Réseaux et Système d'Information
-- DDI : Département Diffusion de l'Information
-- DVRRE : Département Valorisation des Résultats de Recherche et Edition
+### Départements
+| Département | Description |
+|-------------|-------------|
+| **DAI** | Département Acquisitions de l'Information |
+| **DTI** | Département Traitement de l'Information |
+| **DRSI** | Département Réseaux et Système d'Information |
+| **DDI** | Département Diffusion de l'Information |
+| **DVRRE** | Département Valorisation des Résultats de Recherche et Edition |
 
-**Unités Spécialisées :**
-- CATI : Centre d'Appui à la Technologie et à l'Innovation
-- Antennes régionales : Fianarantsoa, Toamasina, Mahajanga
+### Unités Spécialisées
+- **CATI** : Centre d'Appui à la Technologie et à l'Innovation
+- **Antennes régionales** : Fianarantsoa, Toamasina, Mahajanga
 
-## Base de Données SQLite
+## 🗄️ Base de Données SQLite
 
 Le système utilise SQLite pour une gestion persistante et sécurisée des utilisateurs :
 
-- **Fichier** : `/srv/cidst/cidst.db`
-- **Tables** :
+- **📁 Fichier** : `/srv/cidst/cidst.db`
+- **📋 Tables** :
   - `utilisateurs` : Utilisateurs actifs avec hachage Argon2id + salt
   - `groupes` : Définition des groupes CIDST
   - `audit_log` : Traçabilité complète des opérations
-- **Fonctionnalités** :
-  - Hachage sécurisé des mots de passe
-  - Audit trail complet
-  - Contraintes d'intégrité
-  - Index optimisés
-  - Mode WAL pour les performances
+- **🚀 Fonctionnalités** :
+  - 🔐 Hachage sécurisé des mots de passe
+  - 📊 Audit trail complet
+  - ✅ Contraintes d'intégrité
+  - ⚡ Index optimisés
+  - 🔄 Mode WAL pour les performances
 
-## Format CSV (Legacy)
+## 📄 Format CSV (Legacy)
 
 ⚠️ **Le CSV est maintenant optionnel** - la gestion se fait via l'interface d'administration.
 
@@ -87,18 +96,204 @@ saf_chef,SecureP@ss123!,saf,chef
 admin_saf1,SecureP@ss123!,saf,employe
 ```
 
-**Rôles:**
-- `pdg` : Directeur general, administrateur système, propriétaire des archives
+**👥 Rôles:**
+- `pdg` : Directeur général, administrateur système, propriétaire des archives
 - `chef` : Chef de service/département, accès rw sur dossier du groupe
 - `employe` : Agent, accès à dossiers de travail collaboratif et archives documentaires
 
-## Interface d'Administration
+## 🖥️ Interface d'Administration
 
-### Lancement de l'interface
+### 🚀 Lancement de l'interface
 
 ```bash
 sudo /srv/cidst/admin_cidst.sh
 ```
+
+### 📋 Menu Principal
+
+```
+=== GESTION CIDST V3.0 - Interface d'Administration ===
+
+1. 📊 Afficher tous les utilisateurs
+2. ➕ Ajouter un utilisateur
+3. ✏️ Modifier un utilisateur
+4. 🗑️ Supprimer un utilisateur
+5. 🔍 Rechercher un utilisateur
+6. 📋 Importer depuis CSV
+7. 💾 Exporter vers CSV
+8. 📈 Afficher le journal d'audit
+9. 🔄 Synchroniser avec le système
+0. 🚪 Quitter
+
+Choix :
+```
+
+### 🔧 Fonctionnalités
+
+- **Gestion complète des utilisateurs** : CRUD avec validation
+- **Synchronisation automatique** : Utilisateurs Linux + Samba + groupes
+- **Audit en temps réel** : Toutes les actions tracées
+- **Import/Export CSV** : Compatibilité legacy
+- **Interface interactive** : Navigation facile avec menus numérotés
+
+## 📦 Installation
+
+### Prérequis
+- Ubuntu 20.04+ ou Debian 11+
+- Droits root (sudo)
+- Connexion internet pour les dépendances
+
+### Installation Automatisée
+
+```bash
+# Télécharger le dépôt
+git clone https://github.com/Rakoto703/syst-medegestionfichiers.git
+cd syst-medegestionfichiers
+
+# Lancer l'installation (nécessite root)
+sudo ./install.sh
+```
+
+### Installation Manuelle
+
+```bash
+# Installer les dépendances
+sudo apt update
+sudo apt install -y samba samba-common-bin clamav clamav-daemon sqlite3 python3 python3-argon2-cffi openssh-server ufw inotify-tools
+
+# Créer la structure
+sudo mkdir -p /srv/cidst/lib
+
+# Copier les fichiers
+sudo cp config.sh main.sh csv_watcher.sh admin_cidst.sh /srv/cidst/
+sudo cp lib/*.sh /srv/cidst/lib/
+
+# Configurer les permissions
+sudo chmod 750 /srv/cidst
+sudo chmod 700 /srv/cidst/*.sh
+sudo chmod 644 /srv/cidst/config.sh
+sudo chmod 755 /srv/cidst/lib
+sudo chmod 644 /srv/cidst/lib/*.sh
+
+# Initialiser la base de données
+sudo /srv/cidst/lib/database.sh
+```
+
+## 🚀 Utilisation
+
+### Démarrage du Système
+
+```bash
+# Via interface admin (recommandé)
+sudo /srv/cidst/admin_cidst.sh
+
+# Via script principal (legacy)
+sudo /srv/cidst/main.sh
+```
+
+### Services Système
+
+Le système inclut des services automatiques pour un fonctionnement 24/7 :
+
+```bash
+# État des services
+sudo systemctl status cidst-monitoring
+sudo systemctl status cidst-cleanup.timer
+sudo systemctl status cidst-antivirus.timer
+
+# Logs temps réel
+sudo journalctl -u cidst-* -f
+```
+
+### Gestion des Utilisateurs
+
+```bash
+# Ajouter un utilisateur
+sudo /srv/cidst/admin_cidst.sh
+# Sélectionner "2. Ajouter un utilisateur"
+
+# Modifier un utilisateur
+sudo /srv/cidst/admin_cidst.sh
+# Sélectionner "3. Modifier un utilisateur"
+
+# Supprimer un utilisateur
+sudo /srv/cidst/admin_cidst.sh
+# Sélectionner "4. Supprimer un utilisateur"
+```
+
+## 🔒 Sécurité
+
+### Fonctionnalités de Sécurité
+
+- **🔐 Hachage Argon2id** : Mots de passe sécurisés avec salt
+- **🛡️ Antivirus intégré** : ClamAV avec scans hebdomadaires
+- **🔥 Pare-feu restrictif** : UFW configuré pour accès minimal
+- **📊 Audit trail** : Traçabilité complète des opérations
+- **🧹 Nettoyage automatique** : Suppression des données orphelines
+- **👀 Monitoring continu** : Surveillance des ressources système
+
+### Bonnes Pratiques
+
+- Utilisez des mots de passe forts (12+ caractères)
+- Changez régulièrement les mots de passe administrateur
+- Vérifiez régulièrement les logs d'audit
+- Maintenez le système à jour
+- Effectuez des sauvegardes régulières de `/srv/cidst/cidst.db`
+
+## 📊 Monitoring et Logs
+
+### Logs Disponibles
+
+- **📁 Log principal** : `/var/log/cidst_gestion.log`
+- **📋 Logs système** : `journalctl -u cidst-*`
+- **🗃️ Base d'audit** : Table `audit_log` dans `cidst.db`
+
+### Commandes de Monitoring
+
+```bash
+# Afficher les logs en temps réel
+tail -f /var/log/cidst_gestion.log
+
+# Afficher les logs système
+sudo journalctl -u cidst-monitoring -f
+
+# Vérifier l'état des services
+sudo systemctl list-timers
+sudo systemctl status cidst-*
+```
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! Pour contribuer :
+
+1. Fork le projet
+2. Créez une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`)
+3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Pushez vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrez une Pull Request
+
+### Directives de Développement
+
+- Suivez les conventions de nommage Bash
+- Ajoutez des commentaires explicatifs
+- Testez vos modifications
+- Mettez à jour la documentation si nécessaire
+
+## 📄 Licence
+
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## 📞 Support
+
+Pour toute question ou problème :
+
+- 📧 **Email** : [votre-email@exemple.com]
+- 🐛 **Issues** : [GitHub Issues](https://github.com/Rakoto703/syst-medegestionfichiers/issues)
+- 📖 **Documentation** : Voir les fichiers `*.md` dans le dépôt
+
+---
+
+⭐ **Si ce projet vous plaît, n'hésitez pas à lui donner une étoile sur GitHub !**
 
 ### Menu Principal
 
@@ -504,5 +699,6 @@ sudo bash install.sh
 ## License
 
 MIT / Open Source
-#   s y s t - m e d e g e s t i o n f i c h i e r s  
+#   s y s t - m e d e g e s t i o n f i c h i e r s 
+ 
  

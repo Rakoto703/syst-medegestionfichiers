@@ -1,0 +1,9 @@
+# Fichier CSV des utilisateurs CIDST
+# Format: nom,motdepasse,groupe,role
+# Rôles: pdg (Directeur), chef (Chef service/département), employe (Agent)
+# Groupes: direction, saf, scrp, stic, dai, dti, drsi, ddi, dvrre, cati, antenne_fianarantsoa, antenne_toamasina, antenne_mahajanga
+#
+# EXEMPLE (à supprimer après configuration):
+# directeur_cidst,SecureP@ss123!,direction,pdg
+# saf_chef,SecureP@ss123!,saf,chef
+# admin_saf1,SecureP@ss123!,saf,employe

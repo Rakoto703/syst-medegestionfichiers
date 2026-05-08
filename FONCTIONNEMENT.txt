@@ -1,0 +1,285 @@
+
+================================================================================
+FONCTIONNEMENT DU SYSTÈME DE GESTION D'ENTREPRISE V2.0
+================================================================================
+
+1. ARCHITECTURE GLOBALE
+-----------------------
+Le système suit une architecture modulaire en couches:
+
+  ┌─────────────────────────────────────────┐
+  │  CSV (users.csv) - Source de vérité    │
+  └─────────────────┬───────────────────────┘
+                    │ Modification
+  ┌─────────────────▼───────────────────────┐
+  │  csv_watcher.sh (surveillance temps    │
+  │  réel via inotifywait)                  │
+  └─────────────────┬───────────────────────┘
+                    │ Déclenche
+  ┌─────────────────▼───────────────────────┐
+  │  main.sh (orchestrateur principal)      │
+  └─────────────────┬───────────────────────┘
+                    │ Appelle
+  ┌─────────────────▼───────────────────────┐
+  │  lib/*.sh (modules fonctionnels)        │
+  └─────────────────────────────────────────┘
+
+2. FLUX D'EXÉCUTION
+-------------------
+
+a) Initialisation:
+   - Vérification root
+   - Acquisition lock (évite exécutions simultanées)
+   - Vérification CSV
+   - Création répertoires temporaires
+
+b) Sécurité:
+   - Configuration firewall UFW
+   - Sécurisation permissions
+   - Installation ClamAV + scan rapide
+
+c) Analyse CSV:
+   - Lecture ligne par ligne
+   - Identification PDG et Chefs
+   - Stockage dans tableaux associatifs
+
+d) Traitement utilisateurs:
+   POUR CHAQUE LIGNE CSV:
+   1. Validation anti-injection (regex: ^[a-zA-Z0-9._-]+$)
+   2. Validation mot de passe (min 8 caractères)
+   3. Création groupe si nouveau
+   4. Création/modification utilisateur Linux
+   5. Ajout/modification Samba
+   6. Création dossier avec ACL selon rôle:
+      - employe: rwx propriétaire, r-x PDG
+      - chef: rwx propriétaire, rwx PDG, rw sur surveillance
+      - pdg: rwx total, propriétaire groupe
+
+e) Nettoyage:
+   - Archivage utilisateurs absents du CSV
+   - Archivage groupes absents du CSV
+   - Suppression malwares (.exe, .bat, fichiers >100M)
+   - Correction permissions SUID/SGID
+
+f) Configuration services:
+   - Samba SMB3_11 + chiffrement obligatoire
+   - Cron antivirus (maj 6h, scan 3h)
+   - Monitoring ressources
+
+3. GESTION DES RÔLES
+--------------------
+
+PDG (pdg):
+  - Propriétaire de /srv/entreprise
+  - Accès r-x sur tous les dossiers
+  - Admin Samba de tous les partages
+  - Propriétaire des archives
+
+CHEF (chef):
+  - Propriétaire de son dossier groupe
+  - Accès rw sur fichiers surveillance de son groupe
+  - Accès Samba à son partage groupe
+
+EMPLOYÉ (employe):
+  - Accès rwx sur son dossier uniquement
+  - Accès Samba à son partage groupe
+  - Limites ressources (anti-DoS)
+
+4. SÉCURITÉ RENFORCÉE
+---------------------
+
+- Anti-injection: Validation regex stricte sur tous les champs
+- ACL POSIX: setfacl pour permissions fines
+- Sticky bit: Empêche suppression par d'autres utilisateurs
+- Firewall: UFW restrictif, Samba uniquement VLAN interne
+- Samba: SMB3_11, chiffrement requis, NTLMv2-only
+- Antivirus: ClamAV temps réel + scan quotidien
+- Limites: nproc, nofile, fsize configurés
+- Monitoring: Seuils CPU/RAM/Disk à 80%
+- Audit: Détection SUID/SGID, fichiers sans propriétaire
+
+5. IDEMPOTENCE
+--------------
+Le système peut être relancé sans risque:
+- Groupe existe déjà → conservation
+- Utilisateur existe → mise à jour mot de passe
+- Dossier existe → mise à jour permissions
+- Samba config → suppression ancien bloc avant réécriture
+
+6. FONCTIONNEMENT 24/7 AVEC SYSTEMD
+-----------------------------------
+Le système fonctionne en continu avec 4 services systemd + 2 timers:
+
+SERVICES PRINCIPAUX:
+- cidst-csv-watcher.service    → Surveillance temps réel CSV
+- cidst-monitoring.service     → Monitoring continu ressources
+- cidst-cleanup.service        → Nettoyage automatique
+- cidst-antivirus.service      → Protection antivirus
+
+TIMERS PÉRIODIQUES:
+- cidst-monitoring.timer       → Toutes les 5 minutes
+- cidst-antivirus.timer        → Quotidien à 02h00
+
+ARCHITECTURE 24/7:
+  ┌─────────────────────────────────────────┐
+  │  systemd (gestionnaire de services)    │
+  └─────────────────┬───────────────────────┘
+                    │
+  ┌─────────────────▼───────────────────────┐
+  │  Services actifs 24/7:                  │
+  │  • csv_watcher.sh (inotify)             │
+  │  • monitor.sh --continuous              │
+  │  • cleanup.sh (hebdomadaire)            │
+  │  • antivirus.sh --full-scan             │
+  └─────────────────┬───────────────────────┘
+                    │
+  ┌─────────────────▼───────────────────────┐
+  │  Récupération automatique:              │
+  │  • recovery.sh (sur demande)            │
+  │  • main.sh --recovery                   │
+  │  • Redémarrage services défaillants     │
+  └─────────────────────────────────────────┘
+
+REDÉMARRAGE AUTOMATIQUE:
+- Restart=always pour tous les services
+- Timeout de 30s par défaut
+- Gestion des signaux système (SIGTERM, SIGINT)
+- Libération automatique des locks
+
+7. MODE RÉCUPÉRATION AUTOMATIQUE
+---------------------------------
+Le système peut se récupérer automatiquement des pannes:
+
+ÉTAPES DE RÉCUPÉRATION:
+1. Vérification services critiques (smbd, nmbd, clamav-daemon)
+2. Redémarrage automatique des services défaillants
+3. Vérification intégrité fichiers de configuration
+4. Rechargement utilisateurs depuis CSV
+5. Reconfiguration Samba si nécessaire
+6. Nettoyage système et optimisation
+7. Tests de validation finaux
+
+COMMANDES DE RÉCUPÉRATION:
+  sudo /srv/cidst/recovery.sh              # Récupération complète
+  sudo /srv/cidst/main.sh --recovery       # Récupération via main
+  sudo systemctl restart cidst-*           # Redémarrage manuel
+
+8. MONITORING ET ALERTES 24/7
+-------------------------------
+Surveillance continue des ressources système:
+
+SEUILS DE SURVEILLANCE:
+- CPU > 80% → Alerte + log
+- RAM > 90% → Alerte + actions d'urgence
+- Disque < 10% libre → Alerte + nettoyage
+- Services critiques → Redémarrage automatique
+
+ACTIONS D'URGENCE:
+- CPU élevé → Identification processus + log
+- RAM élevée → Kill processus suspects
+- Disque plein → Nettoyage fichiers temporaires
+- Services down → Redémarrage + notification
+
+NOTIFICATIONS:
+- Logs détaillés dans journald
+- Alertes antivirus par email (si configuré)
+- États des services vérifiables via systemctl
+
+9. TÂCHES AUTOMATIQUES
+-----------------------
+Le système exécute automatiquement diverses tâches:
+
+QUOTIDIENNES (02h00):
+- Scan antivirus complet de /srv/cidst
+- Mise à jour signatures ClamAV
+- Rotation logs si nécessaire
+
+HEBDOMADAIRES (dimanche 03h00):
+- Nettoyage complet fichiers temporaires
+- Suppression archives > 90 jours
+- Optimisation base de données Samba
+- Vérification intégrité ACL
+
+CONTINUES (toutes les 5 minutes):
+- Vérification utilisation CPU/RAM
+- Contrôle espace disque
+- Test services critiques
+- Surveillance connexions réseau
+
+10. TESTS ET VALIDATION
+-----------------------
+Script de test intégré pour validation complète:
+
+COMMANDES DE TEST:
+  sudo /srv/cidst/test_system.sh
+
+TESTS EFFECTUÉS:
+- Structure des fichiers
+- Services systemd actifs
+- Permissions et sécurité
+- Configuration Samba
+- Antivirus opérationnel
+- Firewall actif
+- Timers configurés
+- Fonctionnalités 24/7
+
+RÉSULTATS:
+- Affichage détaillé des succès/échecs
+- Codes de retour pour automatisation
+- Logs des problèmes détectés
+
+11. FICHIERS IMPORTANTS
+------------------------
+
+/srv/cidst/users.csv              → Données utilisateurs (configuré par admin)
+/srv/cidst/main.sh                → Orchestrateur principal
+/srv/cidst/recovery.sh            → Récupération automatique
+/srv/cidst/test_system.sh         → Tests de validation
+/srv/cidst/lib/*.sh               → Modules fonctionnels
+/srv/cidst/                       → Données utilisateurs
+/srv/cidst/_archive/              → Archives suppressions
+/var/log/cidst_gestion.log        → Logs système principaux
+/var/log/csv_changes.log          → Logs modifications CSV
+/var/log/clamav-daily.log         → Logs antivirus
+/etc/systemd/system/cidst-*.service → Services systemd
+/etc/systemd/system/cidst-*.timer   → Timers systemd
+
+12. COMMANDES UTILES
+--------------------
+
+Installation et déploiement:
+  sudo bash install.sh
+
+Exécution manuelle:
+  sudo /srv/cidst/main.sh
+
+Mode récupération:
+  sudo /srv/cidst/recovery.sh
+  sudo /srv/cidst/main.sh --recovery
+
+Tests de validation:
+  sudo /srv/cidst/test_system.sh
+
+Gestion des services 24/7:
+  sudo systemctl status cidst-*           # Statut tous services
+  sudo systemctl restart cidst-csv-watcher # Redémarrage watcher
+  sudo systemctl stop cidst-monitoring    # Arrêt monitoring
+  sudo systemctl start cidst-antivirus    # Démarrage antivirus
+
+Logs et monitoring:
+  sudo journalctl -u cidst-csv-watcher -f  # Logs watcher temps réel
+  sudo journalctl -u cidst-monitoring -n 50 # Derniers logs monitoring
+  sudo tail -f /var/log/cidst_gestion.log   # Logs principaux
+  sudo tail -f /var/log/csv_changes.log     # Logs CSV
+
+Vérification Samba:
+  sudo testparm -s                         # Test configuration
+  sudo smbstatus                           # État connexions
+
+Antivirus:
+  sudo clamscan -r /srv/cidst              # Scan manuel
+  sudo freshclam                           # Mise à jour signatures
+
+Maintenance:
+  sudo /srv/cidst/lib/cleanup.sh           # Nettoyage manuel
+  sudo /srv/cidst/lib/monitor.sh --check   # Vérification ressources
