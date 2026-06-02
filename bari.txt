@@ -1,0 +1,123 @@
+[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-117-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+[    0.000000] BIOS-provided physical RAM map:
+[    0.000000] NX (Execute Disable) protection: active
+[    0.000000] efi: Remove mem120: MMIO range=[0xffc00000-0xffffffff] (4MB) from e820 map
+[    0.000015] tsc: Detected 2594.106 MHz processor
+[    0.005670] MTRR map: 5 entries (3 fixed + 2 variable; max 35), built from 16 variable MTRRs
+[    0.021696] Kernel command line: BOOT_IMAGE=/vmlinuz-6.8.0-117-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+[    0.022557] Built 1 zonelists, mobility grouping on.  Total pages: 411769
+[    0.022577] mem auto-init: stack:all(zero), heap alloc:on, heap free:off
+[    0.037585] Memory: 1489124K/1673928K available (22528K kernel code, 4438K rwdata, 14416K rodata, 4924K init, 4788K bss, 184544K reserved, 0K cma-reserved)
+[    0.062731] ftrace: allocated 228 pages with 4 groups
+[    0.067408] rcu: 	RCU restricting CPUs from NR_CPUS=8192 to nr_cpu_ids=1.
+[    0.089156] APIC: Switched APIC routing to: physical x2apic
+[    0.092496] process: using mwait in idle threads
+[    0.310984] smp: Brought up 1 node, 1 CPU
+[    0.311008] smpboot: Total of 1 processors activated (5188.21 BogoMIPS)
+[    0.316305] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.317697] acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+[    0.318612] kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+[    0.446862] ACPI: Added _OSI(Processor Device)
+[    0.446872] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.477636] ACPI: Using IOAPIC for interrupt routing
+[    0.480852] PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+[    0.505591] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+[    0.505635] acpi PNP0A03:00: _OSC: not requesting OS control; OS requires [ExtendedConfig ASPM ClockPM MSI]
+[    0.508333] pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7 window]
+[    0.508348] pci_bus 0000:00: root bus resource [io  0x0d00-0xffff window]
+[    0.508362] pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000bffff window]
+[    0.508378] pci_bus 0000:00: root bus resource [mem 0x67500000-0xfdffffff window]
+[    0.508394] pci_bus 0000:00: root bus resource [bus 00-ff]
+[    0.514319] pci 0000:00:02.0: Video device with shadowed ROM at [mem 0x000c0000-0x000dffff]
+[    0.563979] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.565602] NetLabel:  protocols = UNLABELED CIPSOv4 CALIPSO
+[    0.565809] mctp: management component transport protocol core
+[    0.565821] NET: Registered PF_MCTP protocol family
+[    0.565844] PCI: Using ACPI for IRQ routing
+[    0.566487] pci 0000:00:02.0: vgaarb: bridge control possible
+[    0.582461] NET: Registered PF_INET protocol family
+[    0.639104] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.639104] NET: Registered PF_XDP protocol family
+[    0.647448] Trying to unpack rootfs image as initramfs...
+[    0.695805] shpchp: Standard Hot Plug PCI Controller Driver version: 0.4
+[    0.742444] ohci-pci 0000:00:06.0: OHCI PCI host controller
+[    0.797296] usb usb1: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 6.08
+[    0.797322] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.797338] usb usb1: Product: OHCI PCI host controller
+[    0.799756] i8042: PNP: PS/2 Controller [PNP0303:PS2K,PNP0f03:PS2M] at 0x60,0x64 irq 1,12
+[    0.801983] ehci-pci 0000:00:0b.0: EHCI Host Controller
+[    0.813768] usb usb2: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.08
+[    0.813798] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.813813] usb usb2: Product: EHCI Host Controller
+[    0.851634] drop_monitor: Initializing network drop monitor service
+[    0.853205] NET: Registered PF_INET6 protocol family
+[    0.910225] ata2.00: ATAPI: VBOX CD-ROM, 1.0, max UDMA/133
+[    0.915318] scsi 1:0:0:0: CD-ROM            VBOX     CD-ROM           1.0  PQ: 0 ANSI: 5
+[    0.917341] cdrom: Uniform CD-ROM driver Revision: 3.20
+[    0.921593] sr 1:0:0:0: Attached scsi CD-ROM sr0
+[    1.184636] Segment Routing with IPv6
+[    1.185204] NET: Registered PF_PACKET protocol family
+[    1.186090] IPI shorthand broadcast: enabled
+[    1.250657] Key type fscrypt-provisioning registered
+[    1.359825] usb 1-1: New USB device found, idVendor=80ee, idProduct=0021, bcdDevice= 1.00
+[    1.360771] usb 1-1: New USB device strings: Mfr=1, Product=3, SerialNumber=0
+[    1.361644] usb 1-1: Product: USB Tablet
+[    1.416518] RAS: Correctable Errors collector initialized.
+[    1.440527] Write protecting the kernel read-only data: 38912k
+[    1.444710] Freeing unused kernel image (rodata/data gap) memory: 1968K
+[    1.715219] Run /init as init process
+[    1.716428]   with environment:
+[    2.197888] ACPI: video: Video Device [GFX0] (multi-head: yes  rom: no  post: no)
+[    2.271944] e1000: Intel(R) PRO/1000 Network Driver
+[    2.739425] ata3: SATA link up 3.0 Gbps (SStatus 123 SControl 300)
+[    2.761846] sd 2:0:0:0: [sda] Write Protect is off
+[    3.077582] e1000 0000:00:03.0 eth0: Intel(R) PRO/1000 Network Connection
+[    3.627411] e1000 0000:00:08.0 eth1: Intel(R) PRO/1000 Network Connection
+[    4.107799] e1000 0000:00:09.0 eth2: Intel(R) PRO/1000 Network Connection
+[    4.121044] e1000 0000:00:03.0 enp0s3: renamed from eth0
+[    4.130737] e1000 0000:00:09.0 enp0s9: renamed from eth2
+[    4.142368] e1000 0000:00:08.0 enp0s8: renamed from eth1
+[    5.997063] EXT4-fs (dm-0): mounted filesystem 6a6608be-44a6-44fe-a5ee-267f92707882 ro with ordered data mode. Quota mode: none.
+[   13.812708] systemd[1]: Created slice system-modprobe.slice - Slice /system/modprobe.
+[   13.864061] systemd[1]: Set up automount proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point.
+[   13.883088] systemd[1]: Reached target integritysetup.target - Local Integrity Protected Volumes.
+[   13.906743] systemd[1]: Reached target veritysetup.target - Local Verity Protected Volumes.
+[   13.929727] systemd[1]: Listening on multipathd.socket - multipathd control socket.
+[   14.067742] systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+[   14.336321] systemd[1]: Starting lvm2-monitor.service - Monitoring of LVM2 mirrors, snapshots etc. using dmeventd or progress polling...
+[   14.402548] systemd[1]: Starting modprobe@configfs.service - Load Kernel Module configfs...
+[   14.431024] systemd[1]: Starting modprobe@dm_mod.service - Load Kernel Module dm_mod...
+[   14.484675] systemd[1]: Starting modprobe@drm.service - Load Kernel Module drm...
+[   14.517859] systemd[1]: Starting modprobe@efi_pstore.service - Load Kernel Module efi_pstore...
+[   14.560825] systemd[1]: Starting modprobe@fuse.service - Load Kernel Module fuse...
+[   14.608939] systemd[1]: Starting modprobe@loop.service - Load Kernel Module loop...
+[   14.666677] systemd[1]: systemd-fsck-root.service - File System Check on Root Device was skipped because of an unmet condition check (ConditionPathExists=!/run/initramfs/fsck-root).
+[   14.809902] systemd[1]: Starting systemd-remount-fs.service - Remount Root and Kernel File Systems...
+[   15.006746] EXT4-fs (dm-0): re-mounted 6a6608be-44a6-44fe-a5ee-267f92707882 r/w.
+[   15.485150] Adding 2097148k swap on /swap.img.  Priority:-2 extents:3 across:2244604k 
+[   17.712346] systemd-journald[295]: /var/log/journal/9e54896062cd4ea7b62e4740f84a471c/system.journal: Journal file uses a different sequence number ID, rotating.
+[   17.712372] systemd-journald[295]: Rotating system journal.
+[   23.527384] piix4_smbus 0000:00:07.0: SMBus Host Controller at 0x4100, revision 0
+[   23.916860] vmwgfx 0000:00:02.0: [drm] *ERROR* vmwgfx seems to be running on an unsupported hypervisor.
+[   23.916879] vmwgfx 0000:00:02.0: [drm] *ERROR* This configuration is likely broken.
+[   23.916893] vmwgfx 0000:00:02.0: [drm] *ERROR* Please switch to a supported graphics device to avoid problems.
+[   27.762783] EXT4-fs (sda2): mounted filesystem 34b4b3b7-de3e-4eeb-b4c9-7dbea98ee375 r/w with ordered data mode. Quota mode: none.
+[   29.457636] audit: type=1400 audit(1780376607.148:2): apparmor="STATUS" operation="profile_load" profile="unconfined" name="1password" pid=559 comm="apparmor_parser"
+[   29.577562] audit: type=1400 audit(1780376607.268:3): apparmor="STATUS" operation="profile_load" profile="unconfined" name="Discord" pid=576 comm="apparmor_parser"
+[   29.605359] audit: type=1400 audit(1780376607.296:4): apparmor="STATUS" operation="profile_load" profile="unconfined" name=4D6F6E676F444220436F6D70617373 pid=578 comm="apparmor_parser"
+[   29.615603] audit: type=1400 audit(1780376607.306:5): apparmor="STATUS" operation="profile_load" profile="unconfined" name="QtWebEngineProcess" pid=579 comm="apparmor_parser"
+[   29.628444] audit: type=1400 audit(1780376607.319:6): apparmor="STATUS" operation="profile_load" profile="unconfined" name="balena-etcher" pid=580 comm="apparmor_parser"
+[   29.672032] audit: type=1400 audit(1780376607.362:7): apparmor="STATUS" operation="profile_load" profile="unconfined" name="brave" pid=581 comm="apparmor_parser"
+[   29.692697] audit: type=1400 audit(1780376607.383:8): apparmor="STATUS" operation="profile_load" profile="unconfined" name="buildah" pid=583 comm="apparmor_parser"
+[   29.706632] audit: type=1400 audit(1780376607.397:9): apparmor="STATUS" operation="profile_load" profile="unconfined" name="cam" pid=586 comm="apparmor_parser"
+[   29.723519] audit: type=1400 audit(1780376607.414:10): apparmor="STATUS" operation="profile_load" profile="unconfined" name="ch-checkns" pid=588 comm="apparmor_parser"
+[   29.755536] audit: type=1400 audit(1780376607.446:11): apparmor="STATUS" operation="profile_load" profile="unconfined" name="ch-run" pid=589 comm="apparmor_parser"
+[   32.120971] e1000: enp0s3 NIC Link is Up 1000 Mbps Full Duplex, Flow Control: RX
+[   32.131789] e1000: enp0s8 NIC Link is Up 1000 Mbps Full Duplex, Flow Control: RX
+[   32.142769] e1000: enp0s9 NIC Link is Up 1000 Mbps Full Duplex, Flow Control: RX
+[   43.035992] audit: type=1400 audit(1780376620.726:125): apparmor="STATUS" operation="profile_replace" info="same as current profile, skipping" profile="unconfined" name="rsyslogd" pid=810 comm="apparmor_parser"
+[   62.150068] NET: Registered PF_QIPCRTR protocol family
+[   67.927196] loop0: detected capacity change from 0 to 8
+[   70.454541] audit: type=1400 audit(1780376648.146:126): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/snapd/snap-confine" pid=1030 comm="apparmor_parser"
+[   70.459407] audit: type=1400 audit(1780376648.150:127): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/snapd/snap-confine//mount-namespace-capture-helper" pid=1030 comm="apparmor_parser"
+[  109.909225] systemd-journald[295]: /var/log/journal/9e54896062cd4ea7b62e4740f84a471c/user-1000.journal: Journal file uses a different sequence number ID, rotating.

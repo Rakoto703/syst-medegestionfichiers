@@ -1,0 +1,108 @@
+● cidst-csv-watcher.service - Surveillance CSV Gestion CIDST (24/7) [OPTIONNEL]
+     Loaded: loaded (/etc/systemd/system/cidst-csv-watcher.service; enabled; preset: enabled)
+     Active: active (running) since Mon 2026-06-01 13:23:40 UTC; 28min ago
+   Main PID: 1021 (csv_watcher.sh)
+      Tasks: 7 (limit: 1775)
+     Memory: 6.3M (peak: 15.0M swap: 116.0K swap peak: 116.0K)
+        CPU: 15min 7.407s
+     CGroup: /system.slice/cidst-csv-watcher.service
+             ├─  1021 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─288674 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─288698 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─288711 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─288713 tee -a /var/log/cidst_gestion.log
+             ├─288714 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─288715 df /
+             └─288716 awk "NR==2 {gsub(\"%\",\"\"); print \$5}"
+
+Jun 01 13:52:36 serversubuntu cidst-watcher[288699]: /srv/cidst/csv_watcher.sh: line 77: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288702]: [2026-06-01 13:52:36] [ALERTE] Service critique nmbd inactif - tentative redémarrage
+Jun 01 13:52:36 serversubuntu cidst-watcher[288703]: /srv/cidst/csv_watcher.sh: line 43: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288705]: /srv/cidst/csv_watcher.sh: line 41: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288710]: [2026-06-01 13:52:36] [ERREUR] Échec redémarrage nmbd
+Jun 01 13:52:36 serversubuntu cidst-watcher[288713]: [2026-06-01 13:52:36] [ALERTE] Service critique smbd inactif - tentative redémarrage
+Jun 01 13:52:36 serversubuntu cidst-watcher[288715]: df: Warning: cannot read table of mounted file systems: No such file or directory
+Jun 01 13:52:36 serversubuntu cidst-watcher[288717]: /srv/cidst/csv_watcher.sh: line 43: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288674]: /srv/cidst/csv_watcher.sh: line 50: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288722]: [2026-06-01 13:52:36] [ERREUR] Échec redémarrage smbd
+Jun 01 13:52:36 serversubuntu cidst-watcher[288723]: /srv/cidst/csv_watcher.sh: line 41: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288720]: [2026-06-01 13:52:36] [INFO] inotifywait terminé, redémarrage surveillance
+Jun 01 13:52:36 serversubuntu cidst-watcher[288727]: /srv/cidst/csv_watcher.sh: line 74: cannot redirect standard input from /dev/null: No such file or directory
+Jun 01 13:52:36 serversubuntu cidst-watcher[288728]: /srv/cidst/csv_watcher.sh: line 77: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288726]: [2026-06-01 13:52:36] [ALERTE] Service critique nmbd inactif - tentative redémarrage
+Jun 01 13:52:36 serversubuntu cidst-watcher[288730]: /srv/cidst/csv_watcher.sh: line 43: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288734]: /srv/cidst/csv_watcher.sh: line 41: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288733]: [2026-06-01 13:52:36] [ERREUR] Échec redémarrage nmbd
+Jun 01 13:52:36 serversubuntu cidst-watcher[288738]: df: Warning: cannot read table of mounted file systems: No such file or directory
+Jun 01 13:52:36 serversubuntu cidst-watcher[288741]: [2026-06-01 13:52:36] [ALERTE] Service critique smbd inactif - tentative redémarrage
+Jun 01 13:52:36 serversubuntu cidst-watcher[288742]: /srv/cidst/csv_watcher.sh: line 43: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288698]: /srv/cidst/csv_watcher.sh: line 50: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288747]: [2026-06-01 13:52:36] [ERREUR] Échec redémarrage smbd
+Jun 01 13:52:36 serversubuntu cidst-watcher[288748]: /srv/cidst/csv_watcher.sh: line 41: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288745]: [2026-06-01 13:52:36] [INFO] inotifywait terminé, redémarrage surveillance
+Jun 01 13:52:36 serversubuntu cidst-watcher[288750]: /srv/cidst/csv_watcher.sh: line 74: cannot redirect standard input from /dev/null: No such file or directory
+Jun 01 13:52:36 serversubuntu cidst-watcher[288753]: /srv/cidst/csv_watcher.sh: line 77: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288752]: [2026-06-01 13:52:36] [ALERTE] Service critique nmbd inactif - tentative redémarrage
+Jun 01 13:52:36 serversubuntu cidst-watcher[288755]: /srv/cidst/csv_watcher.sh: line 43: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288757]: /srv/cidst/csv_watcher.sh: line 41: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288760]: [2026-06-01 13:52:36] [ERREUR] Échec redémarrage nmbd
+Jun 01 13:52:36 serversubuntu cidst-watcher[288765]: [2026-06-01 13:52:36] [ALERTE] Service critique smbd inactif - tentative redémarrage
+Jun 01 13:52:36 serversubuntu cidst-watcher[288763]: df: Warning: cannot read table of mounted file systems: No such file or directory
+Jun 01 13:52:36 serversubuntu cidst-watcher[288767]: /srv/cidst/csv_watcher.sh: line 43: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288727]: /srv/cidst/csv_watcher.sh: line 50: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288771]: [2026-06-01 13:52:36] [ERREUR] Échec redémarrage smbd
+Jun 01 13:52:36 serversubuntu cidst-watcher[288773]: /srv/cidst/csv_watcher.sh: line 41: /dev/null: Read-only file system
+Jun 01 13:52:36 serversubuntu cidst-watcher[288772]: [2026-06-01 13:52:36] [INFO] inotifywait terminé, redémarrage surveillance
+Jun 01 13:52:36 serversubuntu cidst-watcher[288777]: /srv/cidst/csv_watcher.sh: line 74: cannot redirect standard input from /dev/null: No such file or directory
+Jun 01 13:52:36 serversubuntu cidst-watcher[288776]: [2026-06-01 13:52:36] [ALERTE] Service critique nmbd inactif - tentative redémarrage
+Jun 01 13:52:36 serversubuntu cidst-watcher[288778]: /srv/cidst/csv_watcher.sh: line 77: /dev/null: Read-only file system
+
+● cidst-monitoring.service - Monitoring continu CIDST (24/7)
+     Loaded: loaded (/etc/systemd/system/cidst-monitoring.service; enabled; preset: enabled)
+     Active: active (running) since Mon 2026-06-01 13:23:40 UTC; 28min ago
+   Main PID: 1027 (monitor.sh)
+      Tasks: 2 (limit: 1775)
+     Memory: 1.3M (peak: 5.6M swap: 184.0K swap peak: 540.0K)
+        CPU: 930ms
+     CGroup: /system.slice/cidst-monitoring.service
+             ├─  1027 /bin/bash /srv/cidst/lib/monitor.sh --continuous
+             └─226119 sleep 300
+
+Jun 01 13:42:47 serversubuntu cidst-monitor[153390]: [2026-06-01 13:42:47] [INFO] Tentative redémarrage automatique: sshd
+Jun 01 13:42:48 serversubuntu cidst-monitor[153412]: [2026-06-01 13:42:48] [ERREUR] Échec redémarrage sshd
+Jun 01 13:47:48 serversubuntu cidst-monitor[225874]: [2026-06-01 13:47:48] [INFO] ==========================================
+Jun 01 13:47:48 serversubuntu cidst-monitor[225882]: [2026-06-01 13:47:48] [INFO] == MONITORING SYSTÈME CIDST 24/7 ==
+Jun 01 13:47:48 serversubuntu cidst-monitor[225892]: [2026-06-01 13:47:48] [INFO] ==========================================
+Jun 01 13:47:48 serversubuntu cidst-monitor[226023]: [2026-06-01 13:47:48] [INFO] CPU: 100% | RAM: 78% | DISQUE: 23%
+Jun 01 13:47:48 serversubuntu cidst-monitor[226030]: [2026-06-01 13:47:48] [ALERTE] CPU élevé: 100% (seuil: 80%)
+Jun 01 13:47:49 serversubuntu cidst-monitor[226086]: [2026-06-01 13:47:48] [ALERTE] Services arrêtés détectés: sshd
+Jun 01 13:47:49 serversubuntu cidst-monitor[226098]: [2026-06-01 13:47:49] [INFO] Tentative redémarrage automatique: sshd
+Jun 01 13:47:49 serversubuntu cidst-monitor[226118]: [2026-06-01 13:47:49] [ERREUR] Échec redémarrage sshd
+
+× cidst-cleanup.timer - Timer nettoyage quotidien CIDST
+     Loaded: loaded (/etc/systemd/system/cidst-cleanup.timer; enabled; preset: enabled)
+     Active: failed (Result: resources)
+    Trigger: n/a
+   Triggers: ● cidst-cleanup.service
+
+Jun 01 13:23:11 serversubuntu systemd[1]: Started cidst-cleanup.timer - Timer nettoyage quotidien CIDST.
+Jun 01 13:40:55 serversubuntu systemd[1]: cidst-cleanup.timer: Unit to trigger vanished.
+Jun 01 13:40:55 serversubuntu systemd[1]: cidst-cleanup.timer: Failed with result 'resources'.
+
+× cidst-antivirus.service - Scan antivirus périodique CIDST
+     Loaded: loaded (/etc/systemd/system/cidst-antivirus.service; enabled; preset: enabled)
+     Active: failed (Result: timeout) since Mon 2026-06-01 13:40:58 UTC; 11min ago
+TriggeredBy: ○ cidst-antivirus.timer
+   Main PID: 1019 (code=exited, status=0/SUCCESS)
+        CPU: 38.768s
+
+Jun 01 13:23:40 serversubuntu cidst-antivirus[1090]: [2026-06-01 13:23:40] [INFO] Début scan complet de /srv/cidst
+Jun 01 13:40:55 serversubuntu systemd[1]: cidst-antivirus.service: start operation timed out. Terminating.
+Jun 01 13:40:57 serversubuntu cidst-antivirus[125488]: [2026-06-01 13:40:57] [INFO] Nettoyage des fichiers temporaires
+Jun 01 13:40:58 serversubuntu cidst-antivirus[1019]: /srv/cidst/lib/antivirus.sh: line 76: [: 0
+Jun 01 13:40:58 serversubuntu cidst-antivirus[1019]: 0: integer expression expected
+Jun 01 13:40:58 serversubuntu cidst-antivirus[125544]: [2026-06-01 13:40:58] [INFO] Scan périodique terminé - Aucune menace détectée (durée: 1038s)
+Jun 01 13:40:58 serversubuntu cidst-antivirus[125559]: [2026-06-01 13:40:58] [INFO] Nettoyage des fichiers temporaires
+Jun 01 13:40:58 serversubuntu systemd[1]: cidst-antivirus.service: Failed with result 'timeout'.
+Jun 01 13:40:58 serversubuntu systemd[1]: Failed to start cidst-antivirus.service.
+Jun 01 13:40:58 serversubuntu systemd[1]: cidst-antivirus.service: Consumed 38.768s CPU time, 873.7M memory peak, 222.3M memory swap peak.

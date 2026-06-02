@@ -1,0 +1,65 @@
+● cidst-cleanup.timer - Timer nettoyage quotidien CIDST
+     Loaded: loaded (/etc/systemd/system/cidst-cleanup.timer; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-06-02 12:49:58 UTC; 5min ago
+    Trigger: Wed 2026-06-03 00:36:55 UTC; 11h left
+   Triggers: ● cidst-cleanup.service
+
+Jun 02 12:49:58 cidst systemd[1]: Started cidst-cleanup.timer - Timer nettoyage quotidien CIDST.
+
+● cidst-monitoring.service - Monitoring continu CIDST (24/7)
+     Loaded: loaded (/etc/systemd/system/cidst-monitoring.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-06-02 12:49:58 UTC; 5min ago
+   Main PID: 3524 (monitor.sh)
+      Tasks: 2 (limit: 2241)
+     Memory: 1.3M (peak: 5.0M)
+        CPU: 250ms
+     CGroup: /system.slice/cidst-monitoring.service
+             ├─3524 /bin/bash /srv/cidst/lib/monitor.sh --continuous
+             └─4299 sleep 300
+
+Jun 02 12:49:58 cidst systemd[1]: Started cidst-monitoring.service - Monitoring continu CIDST (24/7).
+Jun 02 12:49:58 cidst cidst-monitor[3562]: [2026-06-02 12:49:58] [INFO] Démarrage monitoring continu 24/7
+Jun 02 12:49:58 cidst cidst-monitor[3570]: [2026-06-02 12:49:58] [INFO] ==========================================
+Jun 02 12:49:58 cidst cidst-monitor[3580]: [2026-06-02 12:49:58] [INFO] == MONITORING SYSTÈME CIDST 24/7 ==
+Jun 02 12:49:58 cidst cidst-monitor[3585]: [2026-06-02 12:49:58] [INFO] ==========================================
+Jun 02 12:49:59 cidst cidst-monitor[4028]: [2026-06-02 12:49:59] [INFO] CPU: 100% | RAM: 19% | DISQUE: 50%
+Jun 02 12:49:59 cidst cidst-monitor[4049]: [2026-06-02 12:49:59] [ALERTE] CPU élevé: 100% (seuil: 80%)
+Jun 02 12:49:59 cidst cidst-monitor[4220]: [2026-06-02 12:49:59] [ALERTE] Services arrêtés détectés: sshd
+Jun 02 12:49:59 cidst cidst-monitor[4244]: [2026-06-02 12:49:59] [INFO] Tentative redémarrage automatique: sshd
+Jun 02 12:49:59 cidst cidst-monitor[4292]: [2026-06-02 12:49:59] [ERREUR] Échec redémarrage sshd
+
+● cidst-antivirus.timer - Timer scan antivirus hebdomadaire CIDST
+     Loaded: loaded (/etc/systemd/system/cidst-antivirus.timer; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-06-02 12:49:58 UTC; 5min ago
+    Trigger: Mon 2026-06-08 00:00:35 UTC; 5 days left
+   Triggers: ● cidst-antivirus.service
+
+Jun 02 12:49:58 cidst systemd[1]: Started cidst-antivirus.timer - Timer scan antivirus hebdomadaire CIDST.
+
+● cidst-csv-watcher.service - Surveillance CSV Gestion CIDST (24/7) [OPTIONNEL]
+     Loaded: loaded (/etc/systemd/system/cidst-csv-watcher.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-06-02 12:49:58 UTC; 5min ago
+   Main PID: 3520 (csv_watcher.sh)
+      Tasks: 5 (limit: 2241)
+     Memory: 8.4M (peak: 12.0M)
+        CPU: 8min 889ms
+     CGroup: /system.slice/cidst-csv-watcher.service
+             ├─  3520 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─153101 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─153132 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─153142 date "+%Y-%m-%d %H:%M:%S"
+             ├─153147 /bin/bash /srv/cidst/csv_watcher.sh
+             ├─153149 date "+%Y-%m-%d %H:%M:%S"
+             ├─153150 df /
+             └─153151 awk "NR==2 {gsub(\"%\",\"\"); print \$5}"
+
+Jun 02 12:54:58 cidst cidst-watcher[153133]: /srv/cidst/csv_watcher.sh: line 78: /tmp/cidst_gestion_3520/null: No such file or directory
+Jun 02 12:54:58 cidst cidst-watcher[153138]: /srv/cidst/csv_watcher.sh: line 42: /dev/null: Read-only file system
+Jun 02 12:54:58 cidst cidst-watcher[153130]: df: Warning: cannot read table of mounted file systems: No such file or directory
+Jun 02 12:54:58 cidst cidst-watcher[153136]: [2026-06-02 12:54:58] [ALERTE] Service critique nmbd inactif - tentative redémarrage
+Jun 02 12:54:58 cidst cidst-watcher[153084]: /srv/cidst/csv_watcher.sh: line 51: /dev/null: Read-only file system
+Jun 02 12:54:58 cidst cidst-watcher[153140]: /srv/cidst/csv_watcher.sh: line 44: /dev/null: Read-only file system
+Jun 02 12:54:58 cidst cidst-watcher[153144]: [2026-06-02 12:54:58] [ERREUR] Échec redémarrage nmbd
+Jun 02 12:54:58 cidst cidst-watcher[153146]: [2026-06-02 12:54:58] [ALERTE] Service critique smbd inactif - tentative redémarrage
+Jun 02 12:54:58 cidst cidst-watcher[153148]: /srv/cidst/csv_watcher.sh: line 44: /dev/null: Read-only file system
+Jun 02 12:54:58 cidst cidst-watcher[153150]: df: Warning: cannot read table of mounted file systems: No such file or directory
