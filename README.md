@@ -1,5 +1,12 @@
 # 🚀 Système de Gestion CIDST Linux V3.0
+# 🚀 Système de Gestion CIDST Linux V3.0
 
+[![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+
+> **Système modulaire et sécurisé** pour la gestion centralisée du Centre d'Information et de Documentation Scientifique et Technique (CIDST) : utilisateurs, groupes, partages Samba, antennes régionales et sécurité sur Linux Ubuntu avec base de données SQLite.
 [![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
 [![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
@@ -14,7 +21,15 @@
 - 🔐 **Hachage sécurisé** : Argon2id + salt pour les mots de passe
 - 📊 **Audit complet** : Traçabilité de toutes les opérations administratives
 - ⚡ **Installation automatisée Ubuntu** : Déploiement one-click avec toutes les dépendances
+## ✨ Nouveautés V3.0
 
+- 🗄️ **Base de données SQLite** : Gestion persistante des utilisateurs avec audit trail complet
+- 🖥️ **Interface d'administration** : Console interactive pour la gestion des utilisateurs
+- 🔐 **Hachage sécurisé** : Argon2id + salt pour les mots de passe
+- 📊 **Audit complet** : Traçabilité de toutes les opérations administratives
+- ⚡ **Installation automatisée Ubuntu** : Déploiement one-click avec toutes les dépendances
+
+## 🏗️ Architecture
 ## 🏗️ Architecture
 
 ```
@@ -25,7 +40,25 @@
 ├── csv_watcher.sh     # 👀 Surveillance temps réel du CSV (legacy)
 ├── install.sh         # 📦 Installateur Ubuntu automatisé
 ├── cidst.db           # 🗃️ Base de données SQLite (source de vérité)
+├── config.sh          # ⚙️ Configuration centralisée
+├── main.sh            # 🎯 Orchestrateur principal
+├── admin_cidst.sh     # 👨‍💼 Interface d'administration interactive
+├── csv_watcher.sh     # 👀 Surveillance temps réel du CSV (legacy)
+├── install.sh         # 📦 Installateur Ubuntu automatisé
+├── cidst.db           # 🗃️ Base de données SQLite (source de vérité)
 └── lib/
+    ├── common.sh      # 🛠️ Utilitaires et validation
+    ├── database.sh    # 💾 Gestion SQLite + audit
+    ├── user.sh        # 👤 CRUD utilisateurs Linux + Samba
+    ├── group.sh       # 👥 CRUD groupes Linux
+    ├── directory.sh   # 📁 Gestion dossiers et ACL
+    ├── archive.sh     # 📦 Archivage suppressions
+    ├── samba.sh       # 🌐 Configuration SMB3 sécurisée
+    ├── cleanup.sh     # 🧹 Nettoyage orphelins + malwares
+    ├── monitor.sh     # 📈 Monitoring ressources
+    ├── antivirus.sh   # 🛡️ ClamAV + cron
+    ├── firewall.sh    # 🔥 UFW restrictif
+    └── security.sh    # 🔒 Renforcement système
     ├── common.sh      # 🛠️ Utilitaires et validation
     ├── database.sh    # 💾 Gestion SQLite + audit
     ├── user.sh        # 👤 CRUD utilisateurs Linux + Samba
@@ -61,11 +94,35 @@
 ### Unités Spécialisées
 - **CATI** : Centre d'Appui à la Technologie et à l'Innovation
 - **Antennes régionales** : Fianarantsoa, Toamasina, Mahajanga
+## 🏢 Structure du CIDST
 
+### Services
+| Service | Description |
+|---------|-------------|
+| **SAF** | Service des Affaires Administratives et Financières |
+| **SCRP** | Service Commercial et Relations Publiques |
+| **STIC** | Service Technologies de l'Information et de la Communication |
+
+### Départements
+| Département | Description |
+|-------------|-------------|
+| **DAI** | Département Acquisitions de l'Information |
+| **DTI** | Département Traitement de l'Information |
+| **DRSI** | Département Réseaux et Système d'Information |
+| **DDI** | Département Diffusion de l'Information |
+| **DVRRE** | Département Valorisation des Résultats de Recherche et Edition |
+
+### Unités Spécialisées
+- **CATI** : Centre d'Appui à la Technologie et à l'Innovation
+- **Antennes régionales** : Fianarantsoa, Toamasina, Mahajanga
+
+## 🗄️ Base de Données SQLite
 ## 🗄️ Base de Données SQLite
 
 Le système utilise SQLite pour une gestion persistante et sécurisée des utilisateurs :
 
+- **📁 Fichier** : `/srv/cidst/cidst.db`
+- **📋 Tables** :
 - **📁 Fichier** : `/srv/cidst/cidst.db`
 - **📋 Tables** :
   - `utilisateurs` : Utilisateurs actifs avec hachage Argon2id + salt
@@ -77,7 +134,14 @@ Le système utilise SQLite pour une gestion persistante et sécurisée des utili
   - ✅ Contraintes d'intégrité
   - ⚡ Index optimisés
   - 🔄 Mode WAL pour les performances
+- **🚀 Fonctionnalités** :
+  - 🔐 Hachage sécurisé des mots de passe
+  - 📊 Audit trail complet
+  - ✅ Contraintes d'intégrité
+  - ⚡ Index optimisés
+  - 🔄 Mode WAL pour les performances
 
+## 📄 Format CSV (Legacy)
 ## 📄 Format CSV (Legacy)
 
 ⚠️ **Le CSV est maintenant optionnel** - la gestion se fait via l'interface d'administration.
@@ -98,11 +162,15 @@ admin_saf1,SecureP@ss123!,saf,employe
 
 **👥 Rôles:**
 - `pdg` : Directeur général, administrateur système, propriétaire des archives
+**👥 Rôles:**
+- `pdg` : Directeur général, administrateur système, propriétaire des archives
 - `chef` : Chef de service/département, accès rw sur dossier du groupe
 - `employe` : Agent, accès à dossiers de travail collaboratif et archives documentaires
 
 ## 🖥️ Interface d'Administration
+## 🖥️ Interface d'Administration
 
+### 🚀 Lancement de l'interface
 ### 🚀 Lancement de l'interface
 
 ```bash
